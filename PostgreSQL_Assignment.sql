@@ -70,3 +70,19 @@ SELECT COUNT (DISTINCT species_id) AS unique_species_count FROM sightings;
 -- Query 3: Sightings where location includes 'Pass'
 SELECT * FROM sightings 
    WHERE location ILIKE '%Pass%';
+
+
+   -- Query 4: Each ranger total sightings
+SELECT ra.name, COUNT(si.sighting_id) AS total_sightings
+FROM rangers ra
+LEFT JOIN sightings si ON ra.ranger_id = si.ranger_id
+GROUP BY ra.name
+ORDER BY ra.name;
+
+
+
+-- Query 5: Species never sighted
+SELECT sp.common_name
+FROM species sp
+LEFT JOIN sightings si ON sp.species_id = si.species_id
+WHERE si.species_id IS NULL;
