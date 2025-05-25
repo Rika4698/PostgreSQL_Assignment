@@ -60,19 +60,19 @@ INSERT INTO sightings (sighting_id, species_id, ranger_id, location, sighting_ti
 
 -- Run SQL queries to complete the following tasks:
 
--- Query 1: Register a new ranger
+-- Problem 1: Register a new ranger
 INSERT INTO rangers (name, region) VALUES ('Derek Fox', 'Coastal Plains');
 
--- Query 2:  Count unique species ever sighted
+-- Problem 2:  Count unique species ever sighted
 SELECT COUNT (DISTINCT species_id) AS unique_species_count FROM sightings;
 
 
--- Query 3: Sightings where location includes 'Pass'
+-- Problem 3: Sightings where location includes 'Pass'
 SELECT * FROM sightings 
    WHERE location ILIKE '%Pass%';
 
 
-   -- Query 4: Each ranger total sightings
+   -- Problem 4: Each ranger total sightings
 SELECT ra.name, COUNT(si.sighting_id) AS total_sightings
 FROM rangers ra
 LEFT JOIN sightings si ON ra.ranger_id = si.ranger_id
@@ -81,7 +81,7 @@ ORDER BY ra.name;
 
 
 
--- Query 5: Species never sighted
+-- Problem 5: Species never sighted
 SELECT sp.common_name
 FROM species sp
 LEFT JOIN sightings si ON sp.species_id = si.species_id
@@ -89,7 +89,7 @@ WHERE si.species_id IS NULL;
 
 
 
----Query 6: Most recent 2 sightings
+---Problem 6: Most recent 2 sightings
 SELECT sp.common_name, si.sighting_time, ra.name
 FROM sightings si
 JOIN rangers ra ON si.ranger_id = ra.ranger_id
@@ -99,7 +99,24 @@ LIMIT 2;
 
 
 
-----Query 7: Update species discovered before 1800 to status 'Historic'
+----Problem 7: Update species discovered before 1800 to status 'Historic'
 UPDATE species
 SET conservation_status = 'Historic'
 WHERE discovery_date < '1800-01-01';
+
+
+
+
+--- Problem 8: Label each sighting as Morning, Afternoon, or Evening 
+SELECT sighting_id,
+   CASE 
+      WHEN EXTRACT (HOUR FROM sighting_time) < 12 THEN 'Morning'
+      WHEN EXTRACT (HOUR FROM sighting_time) BETWEEN 12 AND 17 THEN 'Afternoon'
+      ELSE 'Evening'
+    END AS time_of_day  
+FROM sightings;
+
+
+
+---Problem 9: 
+
