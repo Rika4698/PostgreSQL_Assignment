@@ -54,7 +54,7 @@ INSERT INTO sightings (sighting_id, species_id, ranger_id, location, sighting_ti
 (3, 3, 3, 'Bamboo Grove East', '2024-05-15 09:10:00', 'Feeding observed'),
 (4, 1, 2, 'Snowfall Pass', '2024-05-18 18:30:00', NULL);
 
-SELECT * FROM rangers;
+-- SELECT * FROM rangers;
 -- SELECT * FROM species;
 -- SELECT * FROM sightings;
 
@@ -86,3 +86,20 @@ SELECT sp.common_name
 FROM species sp
 LEFT JOIN sightings si ON sp.species_id = si.species_id
 WHERE si.species_id IS NULL;
+
+
+
+---Query 6: Most recent 2 sightings
+SELECT sp.common_name, si.sighting_time, ra.name
+FROM sightings si
+JOIN rangers ra ON si.ranger_id = ra.ranger_id
+JOIN species sp ON si.species_id = sp.species_id
+ORDER BY si.sighting_time DESC
+LIMIT 2;
+
+
+
+----Query 7: Update species discovered before 1800 to status 'Historic'
+UPDATE species
+SET conservation_status = 'Historic'
+WHERE discovery_date < '1800-01-01';
