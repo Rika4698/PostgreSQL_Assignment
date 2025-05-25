@@ -60,7 +60,8 @@ SELECT * FROM rangers;
 
 -- Run SQL queries to complete the following tasks:
 
--- Query 1:
--- Register a new ranger
+-- Query 1: Register a new ranger
 INSERT INTO rangers (name, region) VALUES ('Derek Fox', 'Coastal Plains');
 
+-- Query 2:  Count unique species ever sighted
+SELECT COUNT (DISTINCT species_id) AS unique_species_count FROM sightings;
